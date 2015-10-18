@@ -19,8 +19,7 @@ public class ShellSorter implements Sorter {
 	}
 
 	@Override
-	public <T extends Comparable<? super T>> void sort(T[] elements,
-			Comparator<? super T> comparator) {
+	public <T> void sort(T[] elements, Comparator<? super T> comparator) {
 		int j;
 		for (int gap = elements.length / 2; gap > 0; gap /= 2) {
 			for (int i = gap; i < elements.length; i++) {

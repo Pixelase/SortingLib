@@ -31,14 +31,14 @@ public class QuickSorter implements Sorter {
 		}
 	}
 
-	private <T extends Comparable<? super T>> void qsort(T[] elements, int a,
-			int b, Comparator<? super T> comparator) {
+	private <T> void qsort(T[] elements, int a, int b,
+			Comparator<? super T> comparator) {
 		if (a < b) {
 			int i = a, j = b;
 			T x = elements[(i + j) / 2];
 
 			do {
-				while (elements[i].compareTo(x) < 0)
+				while (comparator.compare(elements[i], x) < 0)
 					i++;
 				while (comparator.compare(x, elements[j]) < 0)
 					j--;
@@ -53,8 +53,8 @@ public class QuickSorter implements Sorter {
 
 			} while (i <= j);
 
-			qsort(elements, a, j);
-			qsort(elements, i, b);
+			qsort(elements, a, j, comparator);
+			qsort(elements, i, b, comparator);
 		}
 	}
 
@@ -64,8 +64,7 @@ public class QuickSorter implements Sorter {
 	}
 
 	@Override
-	public <T extends Comparable<? super T>> void sort(T[] elements,
-			Comparator<? super T> comparator) {
+	public <T> void sort(T[] elements, Comparator<? super T> comparator) {
 		qsort(elements, 0, elements.length - 1, comparator);
 
 	}

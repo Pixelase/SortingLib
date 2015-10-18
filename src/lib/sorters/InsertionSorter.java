@@ -21,8 +21,7 @@ public class InsertionSorter implements Sorter {
 	}
 
 	@Override
-	public <T extends Comparable<? super T>> void sort(T[] elements,
-			Comparator<? super T> comparator) {
+	public <T> void sort(T[] elements, Comparator<? super T> comparator) {
 		int j; // the number of items sorted so far
 		T key; // the item to be inserted
 		int i;
