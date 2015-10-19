@@ -1,11 +1,53 @@
 package client;
 
+import java.util.Comparator;
 import java.util.Random;
 
 import lib.sorters.InsertionSorter;
 import lib.sorters.QuickSorter;
 import lib.sorters.ShellSorter;
 import lib.utils.SorterManager;
+
+class WithoutComparable {
+	private int i;
+
+	public WithoutComparable(int i) {
+		super();
+		this.i = i;
+	}
+
+	public int getI() {
+		return i;
+	}
+}
+
+class WithComparable implements Comparable<WithComparable> {
+	private int i;
+
+	public WithComparable(int i) {
+		super();
+		this.i = i;
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	@Override
+	public int compareTo(WithComparable o) {
+		return (i < o.getI()) ? -1 : ((i == o.getI()) ? 0 : 1);
+	}
+}
+
+class MyComparator implements Comparator<WithoutComparable> {
+
+	@Override
+	public int compare(WithoutComparable o1, WithoutComparable o2) {
+		return (o1.getI() < o2.getI()) ? -1
+				: ((o1.getI() == o2.getI()) ? 0 : 1);
+	}
+
+}
 
 public class ConsoleClient {
 
@@ -28,7 +70,7 @@ public class ConsoleClient {
 
 	public static void main(String[] args) {
 
-		Integer[] a1 = generateArray(10, 600);
+		Integer[] a1 = generateArray(1000, 600);
 		Integer[] a2 = a1.clone();
 		Integer[] a3 = a1.clone();
 

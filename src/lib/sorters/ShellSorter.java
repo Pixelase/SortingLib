@@ -4,22 +4,7 @@ import java.util.Comparator;
 
 public class ShellSorter implements Sorter {
 
-	@Override
-	public <T extends Comparable<? super T>> void sort(T[] elements) {
-		int j;
-		for (int gap = elements.length / 2; gap > 0; gap /= 2) {
-			for (int i = gap; i < elements.length; i++) {
-				T tmp = elements[i];
-				for (j = i; j >= gap && tmp.compareTo(elements[j - gap]) < 0; j -= gap) {
-					elements[j] = elements[j - gap];
-				}
-				elements[j] = tmp;
-			}
-		}
-	}
-
-	@Override
-	public <T> void sort(T[] elements, Comparator<? super T> comparator) {
+	private <T> void shellSort(T[] elements, Comparator<? super T> comparator) {
 		int j;
 		for (int gap = elements.length / 2; gap > 0; gap /= 2) {
 			for (int i = gap; i < elements.length; i++) {
@@ -31,6 +16,22 @@ public class ShellSorter implements Sorter {
 				elements[j] = tmp;
 			}
 		}
+	}
+
+	@Override
+	public <T extends Comparable<? super T>> void sort(T[] elements) {
+		shellSort(elements, new Comparator<T>() {
+
+			@Override
+			public int compare(T o1, T o2) {
+				return o1.compareTo(o2);
+			}
+		});
+	}
+
+	@Override
+	public <T> void sort(T[] elements, Comparator<? super T> comparator) {
+		shellSort(elements, comparator);
 	}
 
 }

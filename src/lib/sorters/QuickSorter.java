@@ -4,34 +4,7 @@ import java.util.Comparator;
 
 public class QuickSorter implements Sorter {
 
-	private <T extends Comparable<? super T>> void qsort(T[] elements, int a,
-			int b) {
-		if (a < b) {
-			int i = a, j = b;
-			T x = elements[(i + j) / 2];
-
-			do {
-				while (elements[i].compareTo(x) < 0)
-					i++;
-				while (x.compareTo(elements[j]) < 0)
-					j--;
-
-				if (i <= j) {
-					T tmp = elements[i];
-					elements[i] = elements[j];
-					elements[j] = tmp;
-					i++;
-					j--;
-				}
-
-			} while (i <= j);
-
-			qsort(elements, a, j);
-			qsort(elements, i, b);
-		}
-	}
-
-	private <T> void qsort(T[] elements, int a, int b,
+	private <T> void quickSort(T[] elements, int a, int b,
 			Comparator<? super T> comparator) {
 		if (a < b) {
 			int i = a, j = b;
@@ -53,20 +26,25 @@ public class QuickSorter implements Sorter {
 
 			} while (i <= j);
 
-			qsort(elements, a, j, comparator);
-			qsort(elements, i, b, comparator);
+			quickSort(elements, a, j, comparator);
+			quickSort(elements, i, b, comparator);
 		}
 	}
 
 	@Override
 	public <T extends Comparable<? super T>> void sort(T[] elements) {
-		qsort(elements, 0, elements.length - 1);
+		quickSort(elements, 0, elements.length - 1, new Comparator<T>() {
+
+			@Override
+			public int compare(T o1, T o2) {
+				return o1.compareTo(o2);
+			}
+		});
 	}
 
 	@Override
 	public <T> void sort(T[] elements, Comparator<? super T> comparator) {
-		qsort(elements, 0, elements.length - 1, comparator);
-
+		quickSort(elements, 0, elements.length - 1, comparator);
 	}
 
 }
